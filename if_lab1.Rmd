@@ -1,0 +1,36 @@
+---
+title: "ESM 244 Lab 1"
+author: "Iris Foxfoot"
+date: "1/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(tmap)
+library(sf)
+```
+
+### Read in SF trees data
+
+```{r}
+sf_trees <- read_csv(here("data", "sf_trees", "sf_trees.csv"))
+```
+
+## Basic Wrangling Reminders
+
+refreash skills for data wrangling and summary statistics using funtions in `dplyr` package.
+
+find the top 5 highest observations by legal_status, do some wrangling, make a graph
+
+```{r}
+top_5_status <- sf_trees %>% 
+  count(legal_status) %>% 
+  drop_na(legal_status) %>% 
+  rename(tree_count = n) %>% 
+  relocate(tree_count) %>% 
+  slice_max(tree_count, n = 5)
+```
+
